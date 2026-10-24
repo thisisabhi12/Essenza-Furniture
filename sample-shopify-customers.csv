@@ -1,0 +1,4 @@
+First Name,Last Name,Email,Phone,Accepts Marketing,Total Spent,Total Orders,Tags,Default Address Address1,Default Address City,Default Address Province Code,Default Address Zip,Default Address Country Code
+Liam,Hemsworth,liam.hemsworth@example.com.au,+61411223344,yes,5420.00,2,"vip, architect",18 Campbell Parade,Bondi Beach,NSW,2026,AU
+Chloe,Vandermeer,chloe.v@example.com.au,+61499887766,yes,1850.00,1,"local-client",45 Collins Street,Melbourne,VIC,3000,AU
+Marcus,Sterling,marcus.sterling@example.com.au,+61455667788,no,9200.00,3,"trade, interior-designer",12 St Georges Terrace,Perth,WA,6000,AU

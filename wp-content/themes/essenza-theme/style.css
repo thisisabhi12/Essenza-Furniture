@@ -1,0 +1,1277 @@
+/*
+Theme Name: Essenza Furniture Luxury Theme
+Theme URI: https://www.essenzafurniture.com.au
+Author: Lead WordPress/WooCommerce Solutions Architect
+Author URI: https://www.essenzafurniture.com.au
+Description: High-end bespoke luxury e-commerce theme for Essenza Furniture. Built with an editorial design system, seamless WooCommerce integration, multi-origin fulfillment badge support, and an AJAX off-canvas cart drawer.
+Version: 1.0.0
+Requires at least: 6.5
+Tested up to: 6.7
+Requires PHP: 8.1
+License: Proprietary
+Text Domain: essenza-theme
+*/
+
+/* ==========================================================================
+   1. DESIGN SYSTEM VARIABLES & TOKENS
+   ========================================================================== */
+:root {
+  /* Color Palette */
+  --color-bg: #FFFFFF;
+  --color-surface: #F9F8F6;
+  --color-surface-hover: #F2EFE9;
+  --color-dark: #1C1C1C;
+  --color-dark-subtle: #2C2C2C;
+  --color-text-main: #1C1C1C;
+  --color-text-muted: #6E6D6B;
+  --color-text-light: #9B9A97;
+  --color-border: #E8E5DF;
+  --color-border-light: #F0EDE8;
+  
+  /* Brand Luxury Accent (Champagne Gold) */
+  --color-accent: #C5A059;
+  --color-accent-hover: #AF8B45;
+  --color-accent-light: rgba(197, 160, 89, 0.12);
+  --color-accent-glow: rgba(197, 160, 89, 0.25);
+
+  /* Fulfillment Origin Status Tones */
+  --color-origin-warehouse: #166534;
+  --color-origin-warehouse-bg: #F0FDF4;
+  --color-origin-warehouse-border: #BBF7D0;
+  
+  --color-origin-local: #0369A1;
+  --color-origin-local-bg: #F0F9FF;
+  --color-origin-local-border: #BAE6FD;
+  
+  --color-origin-import: #92400E;
+  --color-origin-import-bg: #FEF3C7;
+  --color-origin-import-border: #FDE68A;
+
+  /* Typography */
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Layout & Spacing */
+  --container-max: 1380px;
+  --container-pad: 32px;
+  --header-height: 80px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+
+  /* Elevations & Transitions */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.1);
+  --shadow-drawer: -8px 0 32px rgba(0, 0, 0, 0.15);
+  --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   2. GLOBAL BASE STYLES
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text-main);
+  background-color: var(--color-bg);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.essenza-container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-pad);
+  padding-right: var(--container-pad);
+}
+
+/* ==========================================================================
+   3. ANNOUNCEMENT BAR & HEADER
+   ========================================================================== */
+.essenza-announcement-bar {
+  background-color: var(--color-dark);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 10px var(--container-pad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.essenza-announcement-bar span.accent {
+  color: var(--color-accent);
+}
+
+.essenza-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+  height: var(--header-height);
+  transition: var(--transition-smooth);
+}
+
+.essenza-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.essenza-logo {
+  display: flex;
+  flex-direction: column;
+}
+
+.essenza-logo a {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-dark);
+}
+
+.essenza-logo .tagline {
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-top: -3px;
+}
+
+.essenza-nav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.essenza-nav a {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-dark);
+  position: relative;
+  padding: 8px 0;
+}
+
+.essenza-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: var(--color-accent);
+  transition: var(--transition-smooth);
+}
+
+.essenza-nav a:hover::after,
+.essenza-nav a.current-menu-item::after {
+  width: 100%;
+}
+
+.essenza-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.essenza-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-dark);
+  transition: var(--transition-smooth);
+  border: 1px solid transparent;
+}
+
+.essenza-action-btn:hover {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+.essenza-cart-trigger {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  position: relative;
+}
+
+.essenza-cart-trigger:hover {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-accent);
+}
+
+.essenza-cart-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-dark);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 600;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+}
+
+/* ==========================================================================
+   4. OFF-CANVAS CART DRAWER
+   ========================================================================== */
+.essenza-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(28, 28, 28, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.essenza-drawer-backdrop.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.essenza-cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 460px;
+  background-color: #FFFFFF;
+  z-index: 9999;
+  box-shadow: var(--shadow-drawer);
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.essenza-cart-drawer.is-active {
+  transform: translateX(0);
+}
+
+.essenza-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.essenza-drawer-header h3 {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--color-dark);
+}
+
+.essenza-drawer-close {
+  background: none;
+  font-size: 24px;
+  color: var(--color-text-muted);
+  transition: var(--transition-smooth);
+}
+
+.essenza-drawer-close:hover {
+  color: var(--color-dark);
+  transform: rotate(90deg);
+}
+
+.essenza-drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 28px;
+}
+
+.essenza-drawer-body .widget_shopping_cart_content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.essenza-drawer-body .woocommerce-mini-cart {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.essenza-drawer-body .woocommerce-mini-cart-item {
+  display: grid;
+  grid-template-columns: 70px 1fr 24px;
+  gap: 16px;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.essenza-drawer-body .woocommerce-mini-cart-item img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+}
+
+.essenza-drawer-body .woocommerce-mini-cart__total {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.essenza-drawer-body .woocommerce-mini-cart__buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.essenza-drawer-body .woocommerce-mini-cart__buttons a.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: center;
+  transition: var(--transition-smooth);
+}
+
+.essenza-drawer-body .woocommerce-mini-cart__buttons a.button:first-child {
+  background-color: var(--color-surface);
+  color: var(--color-dark);
+  border: 1px solid var(--color-border);
+}
+
+.essenza-drawer-body .woocommerce-mini-cart__buttons a.button.checkout {
+  background-color: var(--color-dark);
+  color: #FFFFFF;
+  border: 1px solid var(--color-dark);
+}
+
+.essenza-drawer-body .woocommerce-mini-cart__buttons a.button.checkout:hover {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* ==========================================================================
+   5. HERO & EDITORIAL HOME TEMPLATE
+   ========================================================================== */
+.essenza-hero {
+  position: relative;
+  background-color: var(--color-surface);
+  padding: 100px 0 120px;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.essenza-hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.essenza-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.essenza-hero-title {
+  font-family: var(--font-serif);
+  font-size: 56px;
+  line-height: 1.1;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-dark);
+  margin-bottom: 20px;
+}
+
+.essenza-hero-subtitle {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+  max-width: 520px;
+  margin-bottom: 36px;
+}
+
+.essenza-hero-cta {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 36px;
+  background-color: var(--color-dark);
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-smooth);
+  border: 1px solid var(--color-dark);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 32px;
+  background-color: transparent;
+  color: var(--color-dark);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-dark);
+  transition: var(--transition-smooth);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.essenza-hero-visual {
+  position: relative;
+}
+
+.essenza-hero-image-wrap {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background-color: #EAE6DE;
+  aspect-ratio: 4/3;
+}
+
+.essenza-hero-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.essenza-hero-image-wrap:hover img {
+  transform: scale(1.03);
+}
+
+.essenza-hero-floating-card {
+  position: absolute;
+  bottom: -24px;
+  left: -24px;
+  background-color: #FFFFFF;
+  padding: 20px 24px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 320px;
+}
+
+.essenza-hero-floating-card .icon {
+  font-size: 28px;
+}
+
+.essenza-hero-floating-card .text strong {
+  display: block;
+  font-size: 14px;
+  color: var(--color-dark);
+}
+
+.essenza-hero-floating-card .text span {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+/* Feature Pillars Strip */
+.essenza-pillars {
+  padding: 40px 0;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.essenza-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.essenza-pillar-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-light);
+}
+
+.essenza-pillar-icon {
+  font-size: 24px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFFFFF;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+.essenza-pillar-text h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.essenza-pillar-text p {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   6. CURATED CATALOG GRID & PRODUCT CARDS
+   ========================================================================== */
+.essenza-section {
+  padding: 90px 0;
+  scroll-margin-top: 100px;
+}
+
+.essenza-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 48px;
+}
+
+.essenza-section-tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.essenza-section-title {
+  font-family: var(--font-serif);
+  font-size: 38px;
+  font-weight: 500;
+  color: var(--color-dark);
+}
+
+.essenza-section-link {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-dark);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--color-dark);
+  padding-bottom: 4px;
+}
+
+.essenza-section-link:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* 4-Column Product Loop Grid & WooCommerce Archive Loop */
+.essenza-product-grid,
+.woocommerce ul.products {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 28px !important;
+  list-style: none !important;
+  margin: 32px 0 60px 0 !important;
+  padding: 0 !important;
+}
+
+.woocommerce ul.products::before,
+.woocommerce ul.products::after {
+  display: none !important;
+}
+
+.woocommerce ul.products li.product,
+.woocommerce ul.products .essenza-product-card {
+  width: 100% !important;
+  margin: 0 !important;
+  float: none !important;
+}
+
+.woocommerce-products-header__title.page-title {
+  font-family: var(--font-serif);
+  font-size: 42px;
+  font-weight: 500;
+  color: var(--color-dark);
+  margin-bottom: 12px;
+}
+
+.woocommerce-result-count {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 24px;
+}
+
+.woocommerce-ordering select.orderby {
+  padding: 10px 16px;
+  font-size: 13px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-dark);
+}
+
+/* Product Card */
+.essenza-product-card {
+  position: relative;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-smooth);
+}
+
+.essenza-card-thumb-wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  margin-bottom: 16px;
+}
+
+.essenza-card-thumb-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.essenza-product-card:hover .essenza-card-thumb-wrap img {
+  transform: scale(1.05);
+}
+
+/* Origin Badge on Card */
+.essenza-origin-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.essenza-origin-badge.origin-in_house {
+  background-color: var(--color-origin-warehouse-bg);
+  color: var(--color-origin-warehouse);
+  border: 1px solid var(--color-origin-warehouse-border);
+}
+
+.essenza-origin-badge.origin-local_supplier {
+  background-color: var(--color-origin-local-bg);
+  color: var(--color-origin-local);
+  border: 1px solid var(--color-origin-local-border);
+}
+
+.essenza-origin-badge.origin-overseas_import {
+  background-color: var(--color-origin-import-bg);
+  color: var(--color-origin-import);
+  border: 1px solid var(--color-origin-import-border);
+}
+
+/* Quick Add Button Hover Overlay */
+.essenza-card-action-overlay {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 3;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: var(--transition-smooth);
+}
+
+.essenza-product-card:hover .essenza-card-action-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.essenza-quick-add-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: rgba(28, 28, 28, 0.95);
+  color: #FFFFFF;
+  padding: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(4px);
+  transition: var(--transition-smooth);
+}
+
+.essenza-quick-add-btn:hover {
+  background-color: var(--color-accent);
+}
+
+/* Card Content Details */
+.essenza-card-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.essenza-card-title {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--color-dark);
+  line-height: 1.3;
+  margin-bottom: 6px;
+  transition: var(--transition-smooth);
+}
+
+.essenza-card-title:hover {
+  color: var(--color-accent);
+}
+
+.essenza-card-price {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-dark);
+  margin-bottom: 10px;
+}
+
+.essenza-card-lead-preview {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border-light);
+  margin-top: auto;
+}
+
+/* ==========================================================================
+   7. EDITORIAL SPLIT BESTSELLER BANNER
+   ========================================================================== */
+.essenza-editorial-banner {
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  overflow: hidden;
+  scroll-margin-top: 100px;
+}
+
+.essenza-editorial-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 600px;
+}
+
+.essenza-editorial-content {
+  padding: 80px var(--container-pad);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.essenza-editorial-content .tag {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+}
+
+.essenza-editorial-content h2 {
+  font-family: var(--font-serif);
+  font-size: 44px;
+  line-height: 1.15;
+  font-weight: 500;
+  color: var(--color-dark);
+  margin-bottom: 20px;
+}
+
+.essenza-editorial-content p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--color-text-muted);
+  margin-bottom: 32px;
+  max-width: 500px;
+}
+
+.essenza-editorial-image {
+  background-color: #E2DDD5;
+  position: relative;
+  overflow: hidden;
+}
+
+.essenza-editorial-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==========================================================================
+   8. FOOTER (AUSTRALIAN COMPLIANT)
+   ========================================================================== */
+.essenza-footer {
+  background-color: var(--color-dark);
+  color: #FFFFFF;
+  padding: 80px 0 40px;
+  border-top: 1px solid var(--color-dark-subtle);
+}
+
+.essenza-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 60px;
+}
+
+.essenza-footer-brand h3 {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.essenza-footer-brand p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #A3A29E;
+  margin-bottom: 20px;
+  max-width: 320px;
+}
+
+.essenza-footer-abn {
+  font-size: 12px;
+  color: var(--color-accent);
+  letter-spacing: 0.04em;
+}
+
+.essenza-footer-col h4 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+}
+
+.essenza-footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.essenza-footer-col ul li a {
+  font-size: 13px;
+  color: #A3A29E;
+}
+
+.essenza-footer-col ul li a:hover {
+  color: var(--color-accent);
+}
+
+.essenza-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 32px;
+  border-top: 1px solid #2C2C2C;
+  font-size: 12px;
+  color: #7A7975;
+}
+
+.essenza-payment-badges {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.essenza-badge-pill {
+  padding: 4px 8px;
+  border: 1px solid #383838;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #D1D0CB;
+}
+
+/* ==========================================================================
+   9. WOOCOMMERCE CORE COMPATIBILITY OVERRIDES
+   ========================================================================== */
+.woocommerce-message, 
+.woocommerce-info {
+  background-color: var(--color-surface);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.woocommerce-error {
+  background-color: #FEF2F2;
+  border-left: 4px solid #DC2626;
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.woocommerce-cart-form,
+.woocommerce-checkout {
+  margin: 40px 0;
+}
+
+.woocommerce table.shop_table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.woocommerce table.shop_table th {
+  background-color: var(--color-surface);
+  padding: 16px 20px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.woocommerce table.shop_table td {
+  padding: 20px;
+  border-top: 1px solid var(--color-border-light);
+}
+
+/* ==========================================================================
+   9.1 SINGLE PRODUCT PAGE LUXURY EDITORIAL LAYOUT
+   ========================================================================== */
+.woocommerce div.product {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 60px;
+  align-items: start;
+  margin-bottom: 60px;
+}
+
+.woocommerce div.product div.images {
+  margin-bottom: 0;
+}
+
+.woocommerce div.product div.images img {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+}
+
+.woocommerce div.product div.summary {
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.woocommerce div.product .product_title {
+  font-family: var(--font-serif);
+  font-size: 38px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-dark);
+  margin-bottom: 12px;
+}
+
+.woocommerce div.product p.price,
+.woocommerce div.product span.price {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-dark);
+  margin-bottom: 20px;
+}
+
+.woocommerce div.product .woocommerce-product-details__short-description {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+  margin-bottom: 24px;
+}
+
+.woocommerce div.product form.cart {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-top: 16px;
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.woocommerce div.product form.cart .quantity input.qty {
+  width: 70px;
+  height: 52px;
+  text-align: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-weight: 600;
+  background-color: var(--color-surface);
+}
+
+.woocommerce div.product form.cart button.single_add_to_cart_button {
+  flex: 1;
+  height: 52px;
+  background-color: var(--color-dark);
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-dark);
+  transition: var(--transition-smooth);
+}
+
+.woocommerce div.product form.cart button.single_add_to_cart_button:hover {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+   9.2 CART & CHECKOUT SPLIT SHIPPING PACKAGING STYLES
+   ========================================================================== */
+.woocommerce ul#shipping_method {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+}
+
+.woocommerce ul#shipping_method li {
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.woocommerce-checkout #payment {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  padding: 24px;
+}
+
+.woocommerce-checkout #payment ul.payment_methods {
+  list-style: none;
+  padding: 0;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 20px;
+}
+
+.woocommerce-checkout #payment button#place_order {
+  width: 100%;
+  height: 56px;
+  background-color: var(--color-dark);
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  border: none;
+  transition: var(--transition-smooth);
+}
+
+.woocommerce-checkout #payment button#place_order:hover {
+  background-color: var(--color-accent);
+}
+
+@media (max-width: 900px) {
+  .woocommerce div.product {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+/* ==========================================================================
+   10. RESPONSIVE BREAKPOINTS (1024px, 768px, 480px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .essenza-product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .essenza-hero-title {
+    font-size: 44px;
+  }
+  .essenza-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-height: 70px;
+  }
+  .essenza-nav {
+    display: none; /* Can be expanded with mobile drawer */
+  }
+  .essenza-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .essenza-hero-visual {
+    order: -1;
+  }
+  .essenza-hero-floating-card {
+    display: none;
+  }
+  .essenza-pillars-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .essenza-product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .essenza-editorial-grid {
+    grid-template-columns: 1fr;
+  }
+  .essenza-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .essenza-cart-drawer {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .essenza-hero-title {
+    font-size: 34px;
+  }
+  .essenza-product-grid {
+    grid-template-columns: 1fr;
+  }
+  .essenza-footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .essenza-footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}
